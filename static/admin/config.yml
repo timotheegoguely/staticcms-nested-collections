@@ -1,0 +1,55 @@
+# GitLab Backend
+# https://www.staticcms.org/docs/gitlab-backend
+backend:
+  name: git-gateway # gitlab | git-gateway (for local backend)
+
+# Local Backend
+# https://www.staticcms.org/docs/local-backend
+# 1. Run `npx @staticcms/proxy-server` from the root directory to start the proxy-server
+# 2. Run `hugo serve` in parallel to start the local development server
+local_backend:
+  url: http://localhost:8081/api/v1
+  allowed_hosts: ['192.168.0.1']
+
+# Locale
+locale: 'en'
+
+# Media & Public Folder
+# https://www.staticcms.org/docs/add-to-your-site-cdn#media-and-public-folders
+media_folder: "/assets/media" # Media files will be stored in the repo in this folder
+media_library_folder_support: true
+public_folder: "/media" # The src attribute for uploaded media will begin with this string
+
+# Collections
+collections:
+  - name: nested-folders
+    label: Nested folders
+    folder: content/nested-folders
+    create: true
+    nested:
+      depth: 100
+      summary: '{{title}}'
+      path: { label: 'Path', index_file: '_index' }
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { label: "Draft", name: draft, widget: boolean }
+      - { label: "Title", name: title, widget: string }
+      - { label: "Description", name: description, widget: string, required: false }
+      - { label: "Date", name: date, widget: datetime, time_format: false}
+      - { label: "Image", name: image, widget: image, choose_url: true, required: false }
+      - { label: "Body", name: body, widget: markdown }
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: content/posts
+    create: true
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { label: "Draft", name: draft, widget: boolean }
+      - { label: "Title", name: title, widget: string }
+      - { label: "Description", name: description, widget: string, required: false }
+      - { label: "Date", name: date, widget: datetime, time_format: false}
+      - { label: "Image", name: image, widget: image, choose_url: true, required: false }
+      - { label: "Body", name: body, widget: markdown }
